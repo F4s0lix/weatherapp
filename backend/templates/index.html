@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <a href="/"><h2>REFRESH</h2></a>
+        <h1>WEATHER APP</h1>
+        {% if city %}
+        <h2>{{ city }}</h2>
+        {% else %}
+        <h2>CITY</h2>
+        {% endif %}
+    </header>
+    <main>
+        <section id="temperature"></section>
+        <section id="humidity"></section>
+        <section id="percipitation"></section>
+        <section id="pressure"></section>
+        <section id="clouds"></section>
+        <section id="wind_speed"></section>
+        <section id="wind_direction"></section>
+    </main>
+    <footer>
+        Made by F4s0lix
+    </footer>
+</body>
+</html>
