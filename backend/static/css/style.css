@@ -12,7 +12,7 @@ body{
 
 header{
     width: 100%;
-    height: 15vh;
+    height: 14vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,7 +20,11 @@ header{
 }
 
 header > * {
-    padding: 10px;
+    padding: 5px;
+}
+
+header > h1{
+    text-wrap: nowrap;
 }
 
 header > a{
@@ -34,7 +38,7 @@ header > a:hover {
 
 main{
     width: 100%;
-    height: 79vh;
+    height: 80vh;
 }
 
 footer{
@@ -46,24 +50,46 @@ footer{
     border-top: 1px #a3b18a solid;
 }
 
-#temperature{
-    display: flex;
-    flex-flow: column nowrap;
-    width: 30%;
-    height: 19vh;
-}
-
-#tempdata{
-    display: flex;
-    flex-flow: row nowrap;
-}
-
-#tempdata > *{
-    width: 50%;
-}
-
-#temperature > h1{
+main > section{
     width: 100%;
-    text-align: center;
-    margin-bottom: 3%;
+    height: 30vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+main > section::-webkit-scrollbar{
+    display: block;
+}
+
+main > div{
+    width: 100%;
+    height: 50vh;
+}
+
+.weather-tile{
+    border: 1px solid #a3b18a;
+    display: inline-flex;
+    flex-flow: column nowrap;
+    justify-content:start;
+    align-items: center;
+}
+
+@media screen and (min-width: 601px) {
+    .weather-tile{
+        width: 15%;
+        height: 80%;
+        margin: 15px;
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .weather-tile{
+        width: 40%;
+        height: 80%;
+        margin: 2px;
+    }
 }

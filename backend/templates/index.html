@@ -17,33 +17,36 @@
         {% endif %}
     </header>
     <main>
-        <section id="temperature">
-            <h1>TEMPERATURE</h1>
-            <div id="tempdata">
-            <div>
-            {% if temp_data %}
-                <h2>{{ temp_data['days'][0] }}</h2>
-                {% for index in range((temp_data['data'] | length) // 2 - 3) %}
-                    <h3>{{ temp_data['hours'][index] }} : {{ temp_data['data'][index]}}{{ units['temperature_2m'] }}</h3>
-                {% endfor %}
-            </div>
-            <div>
-                <h2>{{ temp_data['days'][1] }}</h2>
-                {% for index in range((temp_data['data'] | length) // 2 - 3, temp_data['data'] | length) %}
-                    <h3>{{ temp_data['hours'][index] }} : {{ temp_data['data'][index] }}{{ units['temperature_2m'] }}</h3>
-                {% endfor %}
-            </div></div>
+        <section id="weather-scrollable">
+            {% if weatherdata %}
+            {% for index in range(weatherdata['time'] | length) %}
+                <div class="weather-tile">
+                    <h1>{{ weatherdata['time'][index] }}</h1>
+                    <h3>{{ weatherdata['temperature_2m'][index] }}{{ units['temperature_2m'] }} {{ weatherdata['surface_pressure'][index] }}{{ units['surface_pressure'] }}</h3>
+                    <h3>precipitation: {{ weatherdata['precipitation_probability'][index] }}{{ units['precipitation_probability'] }}</h3>
+                    <h3>humidity: {{ weatherdata['relative_humidity_2m'][index] }}{{ units['relative_humidity_2m'] }}</h3>
+                    <h3>cloud cover: {{ weatherdata['cloud_cover'][index] }}{{ units['cloud_cover'] }}</h3>
+                    <h3>wind: {{ weatherdata['wind_speed_10m'][index] }}{{ units['wind_speed_10m'] }} {{weatherdata['wind_direction_10m'][index]}}</h3>
+                </div>
+            {% endfor %}
             {% else %}
-                <h1>Missing data</h1>
+            <h1>Missing data</h1>
             {% endif %}
         </section>
-        <section id="humidity"></section>
-        <section id="percipitation"></section>
-        <section id="pressure"></section>
-        <section id="clouds"></section>
-        <section id="wind_speed"></section>
-        <section id="wind_direction"></section>
+        <div>
+            b
+        </div>
     </main>
+
+    <script>
+        // possible scrolling
+        var scrollableContainer = document.getElementById('weather-scrollable');
+        scrollableContainer.addEventListener('wheel', function(event){
+            this.scrollLeft += event.deltaY;
+            event.preventDefault()
+        });
+    </script>
+
     <footer>
         Made by F4s0lix
     </footer>

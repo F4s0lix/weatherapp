@@ -50,6 +50,22 @@ def get_data() -> dict:
     
     return response_dict['hourly']
 
+def wind_direction(direction: int) -> str:
+    if direction < 23 or direction > 338:
+        return 'N'
+    if 23 < direction < 68:
+        return 'NE'
+    if 68 < direction < 113:
+        return 'E'
+    if 113 < direction < 158:
+        return 'SE'
+    if 158 < direction < 203:
+        return 'S'
+    if 203 < direction < 248:
+        return 'SW'
+    if 248 < direction < 338:
+        return 'W'
+
 def prepare_data_to_current_hour() -> dict:
     now: str = datetime.now()
     now_formatted: str = now.strftime('%Y-%m-%dT%H:00')
@@ -57,4 +73,8 @@ def prepare_data_to_current_hour() -> dict:
     index: int = data['time'].index(now_formatted)
     for key in data:
         data[key] = data[key][index:(index + 26)]
+    for index in range(len(data['time'])):
+        data['time'][index] = ' - '.join(data['time'][index][5:].replace('-', '/').split('T'))
+    for index in range(len(data['wind_direction_10m'])):
+        data['wind_direction_10m'][index] = wind_direction(data['wind_direction_10m'][index])
     return data
