@@ -8,13 +8,13 @@
 </head>
 <body>
     <header>
-        <a href="/"><h2>REFRESH</h2></a>
-        <h1>WEATHER APP</h1>
         {% if city %}
         <h2>{{ city }}</h2>
         {% else %}
         <h2>CITY</h2>
         {% endif %}
+        <h1>WEATHER APP</h1>
+        <a href="/"><h2>REFRESH</h2></a>
     </header>
     <main>
         <section id="weather-scrollable">
@@ -34,10 +34,14 @@
             {% endif %}
         </section>
         <div>
-        <img src="data:image/png;base64, {{ temperature_img }}" alt="temperature chart" loading="lazy">
+        {%for name, img in chart_images.items() %}
+            <img src="data:image/png;base64, {{ img }}" alt="{{ name }}" loading="lazy">
+        {% endfor %}
         </div>
     </main>
-
+    <footer>
+        Made by F4s0lix
+    </footer>
     <script>
         // possible scrolling
         var scrollableContainer = document.getElementById('weather-scrollable');
@@ -46,9 +50,5 @@
             event.preventDefault()
         });
     </script>
-
-    <footer>
-        Made by F4s0lix
-    </footer>
 </body>
 </html>
