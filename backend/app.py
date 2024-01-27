@@ -9,5 +9,5 @@ def index() -> None:
     data_fetcher.get_localization()
     city: str = data_fetcher.CITY.upper()
     data = data_fetcher.prepare_data_to_current_hour()
-    print(data_fetcher.UNITS)
-    return render_template('index.html', city=city, weatherdata=data, units=data_fetcher.UNITS)
+    temperature_chart = create_charts.temperature()
+    return render_template('index.html', city=city, weatherdata=data, units=data_fetcher.UNITS, temperature_img=temperature_chart)

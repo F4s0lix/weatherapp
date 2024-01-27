@@ -34,7 +34,7 @@
             {% endif %}
         </section>
         <div>
-            b
+        <img src="data:image/png;base64, {{ temperature_img }}" alt="temperature chart" loading="lazy">
         </div>
     </main>
 
@@ -42,7 +42,7 @@
         // possible scrolling
         var scrollableContainer = document.getElementById('weather-scrollable');
         scrollableContainer.addEventListener('wheel', function(event){
-            this.scrollLeft += event.deltaY;
+            this.scrollLeft += event.deltaY + event.deltaX; // scroll on mouse or touchpad 
             event.preventDefault()
         });
     </script>
