@@ -17,7 +17,26 @@
         {% endif %}
     </header>
     <main>
-        <section id="temperature"></section>
+        <section id="temperature">
+            <h1>TEMPERATURE</h1>
+            <div id="tempdata">
+            <div>
+            {% if temp_data %}
+                <h2>{{ temp_data['days'][0] }}</h2>
+                {% for index in range((temp_data['data'] | length) // 2 - 3) %}
+                    <h3>{{ temp_data['hours'][index] }} : {{ temp_data['data'][index]}}{{ units['temperature_2m'] }}</h3>
+                {% endfor %}
+            </div>
+            <div>
+                <h2>{{ temp_data['days'][1] }}</h2>
+                {% for index in range((temp_data['data'] | length) // 2 - 3, temp_data['data'] | length) %}
+                    <h3>{{ temp_data['hours'][index] }} : {{ temp_data['data'][index] }}{{ units['temperature_2m'] }}</h3>
+                {% endfor %}
+            </div></div>
+            {% else %}
+                <h1>Missing data</h1>
+            {% endif %}
+        </section>
         <section id="humidity"></section>
         <section id="percipitation"></section>
         <section id="pressure"></section>

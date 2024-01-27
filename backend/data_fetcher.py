@@ -37,7 +37,7 @@ def get_data() -> dict:
     params: dict = {
         'latitude': latitude,
         'longitude': longitude,
-        'forecast_days': 1,
+        'forecast_days': 2,
         'hourly': ["temperature_2m", "relative_humidity_2m", "precipitation_probability", "surface_pressure", "cloud_cover", "wind_speed_10m", "wind_direction_10m"]
     }
     
@@ -52,9 +52,9 @@ def get_data() -> dict:
 
 def prepare_data_to_current_hour() -> dict:
     now: str = datetime.now()
-    formatted: str = now.strftime('%Y-%m-%dT%H:00')
+    now_formatted: str = now.strftime('%Y-%m-%dT%H:00')
     data = get_data()
-    index: int = data['time'].index(formatted)
+    index: int = data['time'].index(now_formatted)
     for key in data:
-        data[key] = data[key][22:]
+        data[key] = data[key][index:(index + 26)]
     return data
