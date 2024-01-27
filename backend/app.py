@@ -11,3 +11,5 @@ def index() -> None:
     data = data_fetcher.prepare_data_to_current_hour(ip)
     charts = create_charts.create_charts()
     return render_template('index.html', city=city, weatherdata=data, units=data_fetcher.UNITS, chart_images=charts)
+
+#TODO: sites with base64 images so I can load them better

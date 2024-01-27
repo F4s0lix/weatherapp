@@ -37,7 +37,6 @@ def get_localization(ip: str='') -> tuple:
     localization = tuple(map(float, response_dict['loc'].split(',')))
     return (localization, city)
 
-CITY: str = '' # current user city FIXME: will not work with more than 1 user
 UNITS: dict = {} # dict which will store units for data #NOTE: can cause problems with more users but is not necessary to fix
 
 def get_data(ip: str = '') -> dict:
