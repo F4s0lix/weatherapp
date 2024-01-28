@@ -14,3 +14,6 @@ def index() -> None:
 
 #TODO: sites with base64 images so I can load them better
 #TODO: add 404 error page
+@app.errorhandler(404)
+def page_missing(e):
+    return render_template('404.html')
