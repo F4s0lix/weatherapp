@@ -29,14 +29,14 @@ def create_charts() -> str:
         _, ax = mpl.subplots()
         #creating chart
         ax.plot(df['time'], df[chart], marker='o', linestyle='-')
-        ax.set_xticks(DATA['time'][::8])
+        ax.set_xticks(DATA['time'][::8]) # date labels every 8 hours
         ax.set_title(chart_title[chart])
-        ax.set_ylabel(data_fetcher.UNITS[chart], rotation=0)
+        ax.set_ylabel(data_fetcher.UNITS[chart], rotation=0) # y label horizontal
         ax.set_xlabel('date')
 
         #saving image as base64
         buffer = io.BytesIO()
         mpl.savefig(buffer, format='png', bbox_inches='tight')
         buffer.seek(0)
-        chart_images[chart] = base64.b64encode(buffer.read()).decode('utf-8')
+        chart_images[chart] = base64.b64encode(buffer.read()).decode('utf-8') 
     return chart_images

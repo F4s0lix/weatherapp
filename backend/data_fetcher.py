@@ -4,6 +4,7 @@ from datetime import datetime
 import ipaddress
 
 def is_private_ip(ip: str):
+    """function check if adres is in private network"""
     try:
         ip_obj = ipaddress.ip_address(ip)
         private_networks: list = [
@@ -19,21 +20,19 @@ def is_private_ip(ip: str):
         return False
 
 def get_localization(ip: str='') -> tuple:
-    """function returns tuple with latitude and longtitude based on IP
-        return: (latitude, longitude) or status code if its different than 200
-        WARNING: function works only if you host app
+    """function returns tuple with tuple with latitude and longtitude and city name based on IP
+        return: ((latitude, longitude), 'city') or status code if its different than 200
     """
     url: str = 'https://ipinfo.io/' # site which returns your geolocation based on IP
     url = url if is_private_ip(ip) else url + ip
-    print(ip)
 
     response = requests.get(url)
     if response.status_code != 200: # if connection failed return status code
         return response.status_code 
     
     response_dict: dict = json.loads(response.text)
-    # tuple with localization values as float
     city = response_dict['city']
+    # tuple with localization values as float
     localization = tuple(map(float, response_dict['loc'].split(',')))
     return (localization, city)
 
@@ -47,7 +46,7 @@ def get_data(ip: str = '') -> dict:
     latitude: float = 0.0
     longitude: float = 0.0
     localization = get_localization(ip)[0]
-    if isinstance(localization, tuple):
+    if isinstance(localization, tuple): # will work if something doesn't work but will give info 
         latitude, longitude = localization
 
     params: dict = {
@@ -62,11 +61,12 @@ def get_data(ip: str = '') -> dict:
         return response.status_code
     
     response_dict: dict = json.loads(response.text)
-    UNITS = response_dict['hourly_units'] # store units in constant
+    UNITS = response_dict['hourly_units'] # store units in global variable
     
     return response_dict['hourly']
 
 def wind_direction(direction: int) -> str:
+    """function returns symbol of wind based on degree"""
     if direction < 23 or direction > 338:
         return 'N'
     if 23 < direction < 68:
@@ -83,14 +83,15 @@ def wind_direction(direction: int) -> str:
         return 'W'
 
 def prepare_data_to_current_hour(ip: str = '') -> dict:
+    """function returns data from current hour"""
     now: str = datetime.now()
     now_formatted: str = now.strftime('%Y-%m-%dT%H:00')
-    data = get_data(ip)
+    data = get_data(ip) # TODO: error hangling
     index: int = data['time'].index(now_formatted)
     for key in data:
-        data[key] = data[key][index:(index + 26)]
+        data[key] = data[key][index:(index + 26)] # cutting data 
     for index in range(len(data['time'])):
-        data['time'][index] = ' - '.join(data['time'][index][5:].replace('-', '/').split('T'))
+        data['time'][index] = ' - '.join(data['time'][index][5:].replace('-', '/').split('T')) # change YYYY-MM-DDTHH:mm to MM/DD - HH:mm
     for index in range(len(data['wind_direction_10m'])):
-        data['wind_direction_10m'][index] = wind_direction(data['wind_direction_10m'][index])
+        data['wind_direction_10m'][index] = wind_direction(data['wind_direction_10m'][index]) # change wind direction in degrees to letter in 8 step wind rose
     return data

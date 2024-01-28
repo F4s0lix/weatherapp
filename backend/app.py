@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index() -> None:
-    ip = request.headers.get('X-Forwarded-For', request.remote_addr) # get user API
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr) # get user API, try to bypass proxy
     city = data_fetcher.get_localization(ip)[1].upper()
     data = data_fetcher.prepare_data_to_current_hour(ip)
     charts = create_charts.create_charts()
