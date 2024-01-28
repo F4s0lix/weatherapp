@@ -23,7 +23,7 @@ def get_localization(ip: str='') -> tuple:
     """function returns tuple with tuple with latitude and longtitude and city name based on IP
         return: ((latitude, longitude), 'city') or status code if its different than 200
     """
-    url: str = 'https://ipinfo.io/' # site which returns your geolocation based on IP
+    url: str = 'https://ipinfo.io/' # API which returns your geolocation based on IP
     url = url if is_private_ip(ip) else url + ip
 
     response = requests.get(url)

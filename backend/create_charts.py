@@ -20,9 +20,9 @@ chart_title: dict = {
 #    'wind_speed_10m': 'wind speed', NOTE: may be used in future
 }
 
-def create_charts() -> str:
+def create_charts(ip: str) -> str:
     """function creates base64 images with temperature, precipitation, pressure and wind speed charts"""
-    DATA: dict = data_fetcher.prepare_data_to_current_hour()
+    DATA: dict = data_fetcher.prepare_data_to_current_hour(ip)
     chart_images: dict = {}
     df = pd.DataFrame(DATA)
     for chart in chart_data:
