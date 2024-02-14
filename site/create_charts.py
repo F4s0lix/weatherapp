@@ -20,16 +20,16 @@ chart_title: dict = {
 #    'wind_speed_10m': 'wind speed', NOTE: may be used in future
 }
 
-def create_charts(ip: str) -> str:
+def create_charts(ip: str) -> dict:
     """function creates base64 images with temperature, precipitation, pressure and wind speed charts"""
-    DATA: dict = data_fetcher.prepare_data_to_current_hour(ip)
+    data: dict = data_fetcher.prepare_data_to_current_hour(ip)
     chart_images: dict = {}
-    df = pd.DataFrame(DATA)
+    df = pd.DataFrame(data)
     for chart in chart_data:
         _, ax = mpl.subplots()
         #creating chart
         ax.plot(df['time'], df[chart], marker='o', linestyle='-')
-        ax.set_xticks(DATA['time'][::8]) # date labels every 8 hours
+        ax.set_xticks(data['time'][::8]) # date labels every 8 hours
         ax.set_title(chart_title[chart])
         ax.set_ylabel(data_fetcher.UNITS[chart], rotation=0) # y label horizontal
         ax.set_xlabel('date')
